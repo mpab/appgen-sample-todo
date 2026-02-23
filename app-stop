@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+./docker/db-stop
+
+SESSION=${PWD##*/}
+WINDOW_NAME="${SESSION}-services"
+DB="${SESSION}:${WINDOW_NAME}.0"
+API="${SESSION}:${WINDOW_NAME}.1"
+FE="${SESSION}:${WINDOW_NAME}.2"
+
+tmux send-keys -t "${FE}" C-c
+tmux send-keys -t "${FE}" "exit" C-j
+
+tmux send-keys -t "${API}" C-c
+tmux send-keys -t "${API}" "exit" C-j
+
+tmux send-keys -t "${DB}" C-c
+tmux send-keys -t "${DB}" "exit" C-j
+
+tmux send-keys -t "${WINDOW_NAME}" "exit" C-j
+tmux kill-window -t "${WINDOW_NAME}"
+
+tmux kill-session -t "${SESSION}"

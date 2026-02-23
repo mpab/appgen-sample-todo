@@ -1,0 +1,52 @@
+th.mat-column-position,
+td.mat-column-position {
+    padding-left: 8px;
+}
+
+.mat-mdc-table-sticky-border-elem-right {
+    border-left: 1px solid #e0e0e0;
+}
+
+.mat-mdc-table-sticky-border-elem-left {
+    border-right: 1px solid #e0e0e0;
+}
+
+.mat-form-field-edit {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.crud-table-container {
+  height: 680px;
+  max-width: 100%;
+  overflow: auto;
+}
+
+/* table styling BEGIN */
+
+.mat-mdc-header-row { background-color: whitesmoke; }
+
+.x-mat-table {
+    --mat-table-header-headline-weight: 550;
+}
+
+.x-mat-form-field {
+    --mat-form-field-container-height: 48px;
+    --mat-form-field-container-vertical-padding: 16px;
+    --mat-form-field-filled-with-label-container-padding-top: 12px;
+    --mat-form-field-filled-with-label-container-padding-bottom: 0px;
+    margin-right:1em /* fixes adjacent button spacing */
+}
+
+/* table styling END */
+
+.x-mat-mdc-button {
+    --mdc-text-button-label-text-size: 0.9rem;
+}
+
+.x-mat-mdc-text-field {
+  --mdc-filled-text-field-container-color: white;
+  --mat-form-field-container-text-size: 0.9rem;
+}

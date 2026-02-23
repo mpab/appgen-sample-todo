@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+. ./docker/db-start
+DB_NAME=$(./backend/database/scripts/database-name)
+. ./docker/-cmd exec -it "$DB_NAME" psql -U postgres

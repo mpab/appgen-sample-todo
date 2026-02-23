@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+# ----------------------------------------------------------------------------
+
+"./seed-table-assignee-enum"
+"./seed-table-status-enum"
+"./seed-table-task-fields-enum"
+"./seed-table-task"

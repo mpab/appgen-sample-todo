@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+DB_NAME=$(./backend/database/scripts/database-name)
+. ./docker/-cmd exec -it "$DB_NAME" "$@"

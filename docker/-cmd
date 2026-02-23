@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+FATAL_FILE="./appgen-fatal.txt"
+[ -f $FATAL_FILE ] && cat $FATAL_FILE && exit 1
+
+DOCKER_ERR=$(docker ps 2>&1 | grep error)
+[ ! -z "$DOCKER_ERR" ] && echo "ERROR: is docker running?" && exit 1
+
+docker "$@"

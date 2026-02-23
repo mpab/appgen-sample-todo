@@ -1,0 +1,10 @@
+{
+  "title": "assignee_enum",
+  "type": "object",
+  "properties": {
+    "assignee_enum_id": { "type": "integer", "constraint": "serial primary key" },
+    "assignee_enum": { "type": "string", "constraint": "varchar unique" }
+  },
+  "required": ["assignee_enum_id", "assignee_enum"],
+  "additionalProperties": false
+}

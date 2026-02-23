@@ -1,0 +1,48 @@
+<mat-sidenav-container autosize>
+    <mat-sidenav class="sidenav" [mode]="isMobile ? 'over' : 'side'" [opened]="isMobile ? 'false' : 'true'"
+        [@.disabled]="animationDisabled()" [@triggerSideNavOpen]="isMenuOpen ? 'close' : 'open'">
+
+        <mat-nav-list>
+            <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+
+                <!-- This is the tree node template for leaf nodes -->
+                <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding matTreeNodePaddingIndent="1.5rem">
+                    <!-- use a disabled button to provide padding for tree leaf -->
+                    <mat-list-item (click)="onMenuNodeClick(node)">
+                        <mat-label class="text-child">{{node.name}}</mat-label>
+                    </mat-list-item>
+                </mat-tree-node>
+                <!-- This is the tree node template for expandable nodes -->
+                <mat-tree-node *matTreeNodeDef="let node;when: hasChild" matTreeNodeToggle
+                    [cdkTreeNodeTypeaheadLabel]="node.name">
+                    <mat-list-item (click)="onMenuNodeClick(node)">
+                        <div class="text-parent">
+                            <mat-icon class="text-parent mat-icon-rtl-mirror">
+                                {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+                            </mat-icon>
+                            <mat-label>
+                                {{node.name}}
+                            </mat-label>
+                        </div>
+                    </mat-list-item>
+
+                </mat-tree-node>
+
+            </mat-tree>
+        </mat-nav-list>
+
+    </mat-sidenav>
+    <mat-sidenav-content [@.disabled]="animationDisabled()" [@triggerToolbarOpen]="isMenuOpen ? 'close' : 'open'">
+        <mat-toolbar color="primary" [class.mat-elevation-z2]="isMenuOpen" [class.mat-elevation-z4]="!isMenuOpen">
+            <button class="expand-icon" matIconButton aria-label="Menu icon" (click)="toggleMenu()">
+                <mat-icon  >
+                    @if (isMenuOpen) { menu } @else { menu_open }
+                </mat-icon>
+            </button>
+            <h1>Application {{currentMenuNode.name}}</h1>
+        </mat-toolbar>
+        <div class="router-outlet-content">
+            <router-outlet></router-outlet>
+        </div>
+    </mat-sidenav-content>
+</mat-sidenav-container>

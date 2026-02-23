@@ -1,0 +1,84 @@
+<h2 mat-dialog-title>{{dataSource.crudMode}} Task</h2>
+<mat-dialog-content>
+
+    <div [hidden]=isHidden(dataSource.columnNames[1])>
+        <mat-form-field floatLabel="always">
+            <mat-label>{{dataSource.columnNames[1]}}</mat-label>
+            <input id='dataSource.item.entity.task' matInput
+                placeholder={{dataSource.item.entity.task}}
+                [(ngModel)]="dataSource.item.entity.task" [formControl]="validators[1].formControl"
+                (blur)="validators[1].showError()" required>
+            @if (validators[1].formControl.invalid) {
+            <mat-error>{{validators[1].message()}}</mat-error>
+            }
+        </mat-form-field>
+    </div>
+
+    <div [hidden]=isHidden(dataSource.columnNames[2])>
+        <mat-form-field floatLabel="always">
+            <mat-label>{{dataSource.columnNames[2]}}</mat-label>
+            <mat-select
+                [(ngModel)]="dataSource.item.entity.assignee_enum"
+                placeholder={{dataSource.item.entity.assignee_enum.assignee_enum}}
+                [formControl]="validators[2].formControl" (blur)="validators[2].showError()" required>
+                @for (item of dataSource.item.constraints.assignee_enum; track $index; let idx =
+                $index) {
+                <mat-option [id]="item.assignee_enum_id"
+                    [value]="item">{{item.assignee_enum}}</mat-option>
+                }
+            </mat-select>
+            @if (validators[2].formControl.invalid) {
+            <mat-error>{{validators[2].message()}}</mat-error>
+            }
+        </mat-form-field>
+    </div>
+
+    <div [hidden]=isHidden(dataSource.columnNames[3])>
+        <mat-form-field floatLabel="always">
+            <mat-label>{{dataSource.columnNames[3]}}</mat-label>
+            <input id='dataSource.item.entity.due_date' matInput
+                placeholder={{dataSource.item.entity.due_date}}
+                [(ngModel)]="dataSource.item.entity.due_date" [formControl]="validators[3].formControl"
+                (blur)="validators[3].showError()" required>
+            @if (validators[3].formControl.invalid) {
+            <mat-error>{{validators[3].message()}}</mat-error>
+            }
+        </mat-form-field>
+    </div>
+
+    <div [hidden]=isHidden(dataSource.columnNames[4])>
+        <mat-form-field floatLabel="always">
+            <mat-label>{{dataSource.columnNames[4]}}</mat-label>
+            <mat-select
+                [(ngModel)]="dataSource.item.entity.status_enum"
+                placeholder={{dataSource.item.entity.status_enum.status_enum}}
+                [formControl]="validators[4].formControl" (blur)="validators[4].showError()" required>
+                @for (item of dataSource.item.constraints.status_enum; track $index; let idx =
+                $index) {
+                <mat-option [id]="item.status_enum_id"
+                    [value]="item">{{item.status_enum}}</mat-option>
+                }
+            </mat-select>
+            @if (validators[4].formControl.invalid) {
+            <mat-error>{{validators[4].message()}}</mat-error>
+            }
+        </mat-form-field>
+    </div>
+
+
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <div [hidden]="dataSource.hideDelete" style='margin-right:4px'>
+        <mat-checkbox
+            color='primary'
+            [ngModel]='getDeleteCheckbox()'
+            (ngModelChange)="toggleDeleteCheckbox($event)">
+        </mat-checkbox>
+    </div>
+    <button mat-raised-button mat-dialog-close="delete" [hidden]="dataSource.hideDelete" [disabled]="disableDelete">
+        Delete
+    </button>
+    <button mat-raised-button mat-dialog-close="cancel">Cancel</button>
+    <button mat-raised-button mat-dialog-close="action" [disabled]="disableAction">{{dataSource.crudAction}}</button>
+</mat-dialog-actions>

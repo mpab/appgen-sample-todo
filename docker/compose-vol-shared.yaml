@@ -1,0 +1,64 @@
+name: ${NAME}
+services:
+  database:
+    profiles: [all, backend, database]
+    volumes:
+      - database_scripts:../database
+      - pgdata:/var/lib/postgresql/data
+    image: postgres:17
+    restart: always
+    shm_size: 128mb
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=postgres
+
+  adminer:
+    profiles: [all, backend, database]
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+
+  api:
+    profiles: [all, backend, api]
+    build:
+      context: ../backend/api
+    ports:
+      - 3000:3000
+    # volumes: # exclude node_modules from image - handled via .dockerignore
+    #   - ./backend/api/:/app
+    #   - /app/node_modules
+    environment:
+      - NODE_ENV=development
+      # if POSTGRES_HOST is not defined, the Pool host is set to localhost
+      # within the docker network, the Pool host is set to database
+      - POSTGRES_HOST=database
+
+  frontend:
+    profiles: [all, frontend]
+    build:
+      context: ../frontend
+    # volumes: # exclude node_modules from image - handled via .dockerignore
+    # - ./frontend/:/app
+    # - /app/node_modules
+    ports:
+      - 4200:4200
+    environment:
+      - NODE_ENV=development
+
+volumes:
+  database_scripts:
+    driver: local
+    driver_opts:
+      type: none
+      device: ../backend/database
+      o: bind
+  pgdata:
+    driver: local
+    driver_opts:
+      type: none
+      device: ../pgdata
+      o: bind

@@ -1,0 +1,58 @@
+#!/usr/bin/env bash
+
+try () {
+    "$@" || exit 1
+}
+
+try . appgen
+
+SCHEMA_DIR="${0%/*}/schema"
+
+# ensure seed data can be found
+CSV_DIR="${0%/*}/csv"
+generate() {
+    # processes the csv files in ./csv
+    # - generates json schemas in ./schema
+    # - generates csv seed files in ./backend/database/csv_seed
+    # - generates scripts in ./backend/database/scripts
+    # - generates sql in ./backend/database/sql
+    try database-raw-csv-to-schema "${CSV_DIR}/${1}.csv" --quiet
+}
+generate Assignee_Enum
+generate Status_Enum
+generate Task_Fields_Enum
+generate Task
+
+# backend/api
+# - generate API endpoint(s)
+try api-endpoint-crud-schema "${SCHEMA_DIR}/assignee_enum.json"
+try api-endpoint-crud-schema "${SCHEMA_DIR}/status_enum.json"
+try api-endpoint-crud-schema "${SCHEMA_DIR}/task_fields_enum.json"
+try api-endpoint-be4fe-paged-schema "${SCHEMA_DIR}/task.json" --entity-fields=task_fields_enum.json
+
+# frontend
+# - generate page(s) using schema
+try app-page-enum-crud-schema "${SCHEMA_DIR}/assignee_enum.json"
+try app-page-enum-crud-schema "${SCHEMA_DIR}/status_enum.json"
+try app-page-enum-_ru_-schema "${SCHEMA_DIR}/task_fields_enum.json"
+try app-page-table-be4fe-paged-schema "${SCHEMA_DIR}/task.json"
+
+# amend menu item(s)
+try app-menu-add --menu=Task
+try app-menu-add --menu=Assignee
+try app-menu-add --menu=Status
+# app-menu-remove --menu=Home
+
+# create db table(s) and seed them (allow time for db to become available)
+try ./docker/app-start-backend
+echo "waiting for backend..."
+sleep 10s
+try ./docker/db-recreate-seed
+try ./docker/app-stop-backend
+
+echo
+echo "app configured"
+echo "./docker/app-start"
+echo "./app-start"
+echo "http://localhost:4200"
+echo "http://localhost:3000/api-docs"

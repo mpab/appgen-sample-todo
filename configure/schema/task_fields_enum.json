@@ -1,0 +1,10 @@
+{
+  "title": "task_fields_enum",
+  "type": "object",
+  "properties": {
+    "task_fields_enum_id": { "type": "integer", "constraint": "serial primary key" },
+    "task_fields_enum": { "type": "string", "constraint": "varchar unique" }
+  },
+  "required": ["task_fields_enum_id", "task_fields_enum"],
+  "additionalProperties": false
+}

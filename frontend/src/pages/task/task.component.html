@@ -1,0 +1,51 @@
+<div>
+
+    <div>
+        <mat-form-field class="x-mat-form-field">
+            <mat-label>Filter</mat-label>
+            <input matInput (keyup)="applyFilter($event)" placeholder="">
+            <mat-icon matSuffix>search</mat-icon>
+        </mat-form-field>
+        <button mat-raised-button (click)="onClickAdd()">Create</button>
+    </div>
+
+    <div class="crud-table-container mat-elevation-z8">
+        <table mat-table [dataSource]="dataSource" class="sticky-table x-mat-table">
+
+            <ng-container matColumnDef="0" sticky>
+                <th mat-header-cell *matHeaderCellDef> {{columnNames[0]}} </th>
+                <td mat-cell *matCellDef="let item"> {{item.task_id}} </td>
+            </ng-container>
+            <ng-container matColumnDef="1" sticky>
+                <th mat-header-cell *matHeaderCellDef> {{columnNames[1]}} </th>
+                <td mat-cell *matCellDef="let item"> {{item.task}} </td>
+            </ng-container>
+            <ng-container matColumnDef="2" sticky>
+                <th mat-header-cell *matHeaderCellDef> {{columnNames[2]}} </th>
+                <td mat-cell *matCellDef="let item"> {{item.assignee_enum.assignee_enum}} </td>
+            </ng-container>
+            <ng-container matColumnDef="3" sticky>
+                <th mat-header-cell *matHeaderCellDef> {{columnNames[3]}} </th>
+                <td mat-cell *matCellDef="let item"> {{item.due_date}} </td>
+            </ng-container>
+            <ng-container matColumnDef="4" sticky>
+                <th mat-header-cell *matHeaderCellDef> {{columnNames[4]}} </th>
+                <td mat-cell *matCellDef="let item"> {{item.status_enum.status_enum}} </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let item; columns: displayedColumns;" (click)="onClickEdit(item)"></tr>
+
+        </table>
+    </div>
+</div>
+<mat-paginator #paginator
+               (page)="handlePaginatorEvent($event)"
+               [pageSize]="paginatorPageSize"
+               [disabled]="paginatorDisabled"
+               [showFirstLastButtons]="paginatorShowFirstLastButtons"
+               [pageSizeOptions]="paginatorShowPageSizeOptions ? paginatorPageSizeOptions : []"
+               [hidePageSize]="paginatorHidePageSize"
+               aria-label="Select page">
+</mat-paginator>
+<app-alert></app-alert>

@@ -1,0 +1,47 @@
+#!/usr/bin/env bash
+
+try () {
+    "$@" || exit 1
+}
+
+try . appgen
+
+CSV_DIR="${0%/*}/csv"
+APIURL="http://localhost:3000/api"
+
+# backend/api
+# - copy csv seed file(s)
+# - infer schema
+# - generate API endpoint(s)
+# - generate SQL
+try api-endpoint-crud "${CSV_DIR}/Assignee_Enum.csv"
+try api-endpoint-crud "${CSV_DIR}/Status_Enum.csv"
+try api-endpoint-crud "${CSV_DIR}/Task_Fields_Enum.csv"
+try api-endpoint-be4fe-paged "${CSV_DIR}/Task.csv" --entity-fields=task_fields_enum.csv
+
+# create db table(s) and seed them (allow time for db to become available)
+try ./docker/app-start-backend
+echo "waiting for backend..."
+sleep 10s
+try ./docker/db-recreate-seed
+
+# frontend
+# generate page(s) using API
+try app-page-enum-crud "${APIURL}/AssigneeEnum"
+try app-page-enum-crud "${APIURL}/StatusEnum"
+try app-page-enum-_ru_ "${APIURL}/TaskFieldsEnum"
+try app-page-table-be4fe-paged "${APIURL}/Task"
+try ./docker/app-stop-backend
+
+# amend menu item(s)
+try app-menu-add --menu=Task
+try app-menu-add --menu=Assignee
+try app-menu-add --menu=Status
+# app-menu-remove --menu=Home
+
+echo
+echo "app configured"
+echo "./docker/app-start"
+echo "./app-start"
+echo "http://localhost:4200"
+echo "http://localhost:3000/api-docs"

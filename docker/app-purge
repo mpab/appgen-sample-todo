@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+APP_NAME=$(./app-name)
+
+if [ ! "$1" = "y" ]; then
+	echo "Remove all docker images, containers and volumes for $APP_NAME?"
+	select yn in "Yes" "No"; do
+		case $yn in
+		Yes) break ;;
+		No) exit ;;
+		esac
+	done
+fi
+
+echo NOTE: "$0" not removing ./pgdata
+
+. ./docker/app-stop
+. ./docker/-cmd image ls --format table | grep -e "^$APP_NAME" | awk '{print $1}' | xargs -r -n 1 docker image rm -f "$1"
+. ./docker/-compose --profile all down --volumes --rmi 'all'

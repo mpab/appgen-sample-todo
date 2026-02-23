@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+THIS_DIR="${0%/*}"
+DB_NAME=$("${THIS_DIR}"/database-name)
+
+exec_psql() {
+    docker exec -it "${DB_NAME}" psql -U postgres -f "./database/${1}"
+}
+
+# ----------------------------------------------------------------------------
+
+exec_psql './sql/drop-table-assignee-enum.sql'
+exec_psql './sql/create-table-assignee-enum.sql'
+exec_psql './sql/drop-table-status-enum.sql'
+exec_psql './sql/create-table-status-enum.sql'
+exec_psql './sql/drop-table-task-fields-enum.sql'
+exec_psql './sql/create-table-task-fields-enum.sql'
+exec_psql './sql/drop-table-task.sql'
+exec_psql './sql/create-table-task.sql'

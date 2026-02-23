@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+. ./docker/db-start
+cd ./backend/database/scripts || exit
+./recreate-tables
+./seed-tables

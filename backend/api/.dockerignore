@@ -1,0 +1,3 @@
+# don't copy over any local node artifacts
+node_modules
+package-lock.json

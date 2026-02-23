@@ -1,0 +1,18 @@
+[tools]
+node = "22.16"
+npm = "11.4.2"
+
+[tasks.install-ng]
+run = "npm install -g @angular/cli@20.0.3"
+
+[tasks.ng]
+run = "ng"
+
+[tasks.npm]
+run = "npm"
+
+[tasks.install]
+run = "npm i --legacy-peer-deps"
+
+[tasks.start]
+run = "npm start"

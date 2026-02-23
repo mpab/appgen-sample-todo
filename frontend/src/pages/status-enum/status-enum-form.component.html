@@ -1,0 +1,33 @@
+<h2 mat-dialog-title>{{dataSource.crudMode}} Status</h2>
+<mat-dialog-content>
+
+    <div [hidden]=isHidden(dataSource.columnNames[1])>
+        <mat-form-field floatLabel="always">
+            <mat-label>{{dataSource.columnNames[1]}}</mat-label>
+            <input id='dataSource.item.entity.status_enum' matInput
+                placeholder={{dataSource.item.entity.status_enum}}
+                [(ngModel)]="dataSource.item.entity.status_enum" [formControl]="validators[1].formControl"
+                (blur)="validators[1].showError()" required>
+            @if (validators[1].formControl.invalid) {
+            <mat-error>{{validators[1].message()}}</mat-error>
+            }
+        </mat-form-field>
+    </div>
+
+
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <div [hidden]="dataSource.hideDelete" style='margin-right:4px'>
+        <mat-checkbox
+            color='primary'
+            [ngModel]='getDeleteCheckbox()'
+            (ngModelChange)="toggleDeleteCheckbox($event)">
+        </mat-checkbox>
+    </div>
+    <button mat-raised-button mat-dialog-close="delete" [hidden]="dataSource.hideDelete" [disabled]="disableDelete">
+        Delete
+    </button>
+    <button mat-raised-button mat-dialog-close="cancel">Cancel</button>
+    <button mat-raised-button mat-dialog-close="action" [disabled]="disableAction">{{dataSource.crudAction}}</button>
+</mat-dialog-actions>

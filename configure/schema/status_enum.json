@@ -1,0 +1,10 @@
+{
+  "title": "status_enum",
+  "type": "object",
+  "properties": {
+    "status_enum_id": { "type": "integer", "constraint": "serial primary key" },
+    "status_enum": { "type": "string", "constraint": "varchar unique" }
+  },
+  "required": ["status_enum_id", "status_enum"],
+  "additionalProperties": false
+}

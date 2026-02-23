@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+
+SESSION=${PWD##*/}
+WINDOW_NAME="${SESSION}-services"
+
+DB="${SESSION}:${WINDOW_NAME}.0"
+API="${SESSION}:${WINDOW_NAME}.1"
+FE="${SESSION}:${WINDOW_NAME}.2"
+
+tmux new -s "${SESSION}" -n "$WINDOW_NAME" -d
+tmux split-window -h
+tmux split-window -h
+tmux select-layout even-horizontal
+
+tmux send-keys -t "${DB}" "./docker/db-start" C-j
+
+tmux send-keys -t "${API}" "cd ./backend/api" C-j
+tmux send-keys -t "${API}" "mise trust mise.toml" C-j
+tmux send-keys -t "${API}" "mise install" C-j
+tmux send-keys -t "${API}" "mise r install" C-j
+tmux send-keys -t "${API}" "mise r start" C-j
+
+tmux send-keys -t "${FE}" "cd ./frontend" C-j
+tmux send-keys -t "${FE}" "mise trust mise.toml" C-j
+tmux send-keys -t "${FE}" "mise install" C-j
+tmux send-keys -t "${FE}" "mise r install" C-j
+tmux send-keys -t "${FE}" "mise r start" C-j
+
+tmux select-pane -t "${FE}" -T 'frontend'
+tmux select-pane -t "${API}" -T 'api'
+tmux select-pane -t "${DB}"
+
+tmux set -g pane-border-status top
+tmux set -g pane-border-format "#{pane_index} #{pane_title}"
+
+tmux attach -t "${SESSION}"

@@ -1,0 +1,30 @@
+/* do not change */
+
+.mat-mdc-dialog-content {
+    max-height: unset !important;
+}
+
+.mat-mdc-dialog-surface {
+    max-height: 100vh !important;
+}
+
+mat-mdc-menu-item span {
+    font-size: 40px;
+}
+
+.mat-mdc-menu-item span {
+    font-size: 40px;
+}
+
+mat-form-field {
+  font-size: 0.9rem !important;
+  width: 100% !important;
+}
+
+mat-select {
+  font-size: 0.9rem !important;
+}
+
+mat-option {
+  font-size: 0.9rem !important;
+}

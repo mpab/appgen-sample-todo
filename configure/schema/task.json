@@ -1,0 +1,13 @@
+{
+  "title": "task",
+  "type": "object",
+  "properties": {
+    "task_id": { "type": "integer", "constraint": "serial primary key" },
+    "task": { "type": "string", "constraint": "varchar" },
+    "assignee_enum_id": { "$ref": "assignee_enum.json/assignee_enum_id ", "constraint": "integer references assignee_enum(assignee_enum_id)" },
+    "due_date": { "type": "string", "constraint": "varchar" },
+    "status_enum_id": { "$ref": "status_enum.json/status_enum_id ", "constraint": "integer references status_enum(status_enum_id)" }
+  },
+  "required": ["task_id", "task", "assignee_enum_id", "due_date", "status_enum_id"],
+  "additionalProperties": false
+}

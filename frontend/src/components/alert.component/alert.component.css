@@ -1,0 +1,28 @@
+.info {
+    padding: 4px;
+    background-color: skyblue;
+    font-weight: lighter;
+    font-size: smaller;
+}
+
+.success {
+    padding: 4px;
+    background-color: greenyellow;
+    font-weight: lighter;
+    font-size: smaller;
+}
+
+.warn {
+    padding: 4px;
+    background-color: yellow;
+    font-weight: lighter;
+    font-size: smaller;
+}
+
+.error {
+    padding: 4px;
+    color: white;
+    background-color: crimson;
+    font-weight: lighter;
+    font-size: smaller;
+}

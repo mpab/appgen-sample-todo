@@ -1,0 +1,23 @@
+.crud-table-container {
+  height: 680px;
+  max-width: 100%;
+  overflow: auto;
+}
+
+/* table styling BEGIN */
+
+.mat-mdc-header-row { background-color: whitesmoke; }
+
+.x-mat-table {
+    --mat-table-header-headline-weight: 550;
+}
+
+.x-mat-form-field {
+    --mat-form-field-container-height: 48px;
+    --mat-form-field-container-vertical-padding: 16px;
+    --mat-form-field-filled-with-label-container-padding-top: 12px;
+    --mat-form-field-filled-with-label-container-padding-bottom: 0px;
+    margin-right:1em /* fixes adjacent button spacing */
+}
+
+/* table styling END */

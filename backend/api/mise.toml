@@ -1,0 +1,12 @@
+[tools]
+node = "22.16"
+npm = "11.4.2"
+
+[tasks.npm]
+run = "npm"
+
+[tasks.install]
+run = "npm i"
+
+[tasks.start]
+run = "npm start"

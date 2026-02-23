@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+. ./docker/-cmd compose -f ./docker/compose-vol-service.yaml "$@"

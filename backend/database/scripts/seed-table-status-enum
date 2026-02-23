@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+THIS_DIR="${0%/*}"
+DB_NAME=$("${THIS_DIR}"/database-name)
+
+CSV_SEED_DIR="./database/csv_seed"
+
+echo "load: ${CSV_SEED_DIR}/status_enum.csv => status_enum"
+
+docker exec -it "${DB_NAME}" psql -U postgres -c "\copy status_enum \
+(status_enum) \
+from ${CSV_SEED_DIR}/status_enum.csv delimiter ',' csv header;"

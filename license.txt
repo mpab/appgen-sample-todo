@@ -1,0 +1,11 @@
+Claim of Authorship
+I, Michael Alderson-Bythell, assert my right to be recognized as the Author of this body of work.
+Specifically the shfl library portions of the repository. (c) 2026 onwards.
+All code was written by me, no AI was used in the creation of this project.
+
+Terms of Use
+You may use this for non-commercial purposes, with attribution.
+You may not use this for commercial purposes, without attribution, and agreed licensing.
+Any such use is not covered by an implied or explicit warranty.
+
+Other Licenses may be added in future, but these shall neither detract from nor supersede either the initial Claim of Authorship or Terms of Use.
